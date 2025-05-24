@@ -24,10 +24,13 @@ def toeplitz_matvec(t_col: np.ndarray, t_row: np.ndarray, x: np.ndarray) -> np.n
     c = np.concatenate([t_row, np.array([t_col[0]]), np.flip(t_col[1:])])  # długość 2n
     x_ext = np.concatenate([x, np.zeros(len(x))])   # długość 2n
 
+    counter = 0
+    
     # FFT
-    C = fft(c)
-    X = fft(x_ext)
- 
+    C, counter = fft(c, counter)
+    X, counter = fft(x_ext, counter)
+    print(f'fft counter {counter}')
+    
     # Punktowy iloczyn i IFFT
     y_full = ifft(C * X)
 
